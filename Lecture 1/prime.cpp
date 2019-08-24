@@ -4,8 +4,11 @@ using namespace std;
 
 int main(){
 
-	int n = 7;
+	int n;
+	cout<<"Enter the Number"<<endl;
+	cin>>n;
 
+	cout<<"Entered"<<endl;
 	int i = 2;
 
 	while(i<n){
