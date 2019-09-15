@@ -41,7 +41,7 @@ void printDecreasing(int n){
 	return;
 }
 
-void printID(int n){
+void printDI(int n){
 	if(n==0){
 		return;
 	}
@@ -104,7 +104,7 @@ int main(){
 	// cout<<power(2,-4)<<endl;
 	// printIncreasing(5);
 	// printDecreasing(5);
-	// printID(5);
+	// printDI(5);
 
 	// int arr[] = {1,2,3,4,5,6};
 	// cout<<isSorted(arr,6,0)<<endl;
