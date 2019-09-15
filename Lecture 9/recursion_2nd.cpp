@@ -130,7 +130,45 @@ void printSubsequence(string str,string ans){
 	printSubsequence(ros,ans);
 }
 
+void merge(int arr[],int brr[],int size1,int size2){
 
+	int c[size1 + size2];
+
+	int i = 0;
+	int j = 0;
+	int k = 0;
+
+	while(i<size1 and j<size2){
+
+		if(arr[i]>brr[j]){
+			c[k] = brr[j];
+			k++;
+			j++;
+		}else{
+			c[k] = arr[i];
+			k++;
+			i++;
+		}
+	}
+
+	while(i<size1){
+		c[k] = arr[i];
+		i++;
+		k++;
+	}
+
+	while(j<size2){
+		c[k] = brr[j];
+		j++;
+		k++;
+	}
+
+	for(int x=0;x<size1+size2;x++){
+		cout<<c[x]<<" ";
+	}
+	cout<<endl;
+
+}
 
 int main(){
 
@@ -148,7 +186,11 @@ int main(){
 
 	// cout<<moveToEnd("nxaxmxaxnx")<<endl;
 
-	printSubsequence("abc","");
+	// printSubsequence("abc","");
+
+	int arr[] = {1,3,5,7};
+	int brr[] = {2,4,6,8,10,12,23,56,89};
+	merge(arr,brr,4,9);
 
 
 	// string str = "p";
