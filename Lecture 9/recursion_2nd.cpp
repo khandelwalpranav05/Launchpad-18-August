@@ -8,7 +8,7 @@ int sumTilln(int n){
 	}
 
 	int sumtilln1 = sumTilln(n-1);
-	int total = sumtilln1 + n;
+	int total = sumtilln1*n;
 	return total;
 }
 
@@ -120,7 +120,6 @@ void printSubsequence(string str,string ans){
 	if(str.length()==0){
 		// cout<<"Count"<<endl;
 		cout<<ans<<endl;
-		return;
 	}
 
 	char ch = str[0];
