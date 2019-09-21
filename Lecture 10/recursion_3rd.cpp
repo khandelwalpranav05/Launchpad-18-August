@@ -32,6 +32,12 @@ void mappedString(string str,string ans){
 	}
 }
 
+string code[] = {" ",".","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"}; 
+
+void printKeypad(string str,string ans){
+
+}
+
 int main(){
 
 	mappedString("2314","");
