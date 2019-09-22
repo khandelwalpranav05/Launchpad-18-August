@@ -175,6 +175,71 @@ bool ratInMaze(char maze[][4],int sol[][4],int row,int col,int endrow,int endcol
 
 }
 
+bool canWePlace(int mat[][9],int row,int col,int n,int number){
+
+	for(int i=0;i<n;i++){
+		if(mat[i][col]==number or mat[row][i]==number){
+			return false;
+		}
+	}
+
+	int starting_x = (row/3)*3;
+	int starting_y = (col/3)*3;
+
+	for(int i = starting_x; i < starting_x + 3;i++){
+		for(int j = starting_y; j < starting_y + 3; j++){
+			if(mat[i][j]==number){
+				return false;
+			}
+		}
+	}
+
+	return true;
+
+}
+
+bool sudokuSolver(int mat[][9],int row,int col,int n){
+	if(row==n){
+
+		for(int i=0;i<n;i++){
+			for(int j=0;j<n;j++){
+				cout<<mat[i][j]<<" ";
+			}
+			cout<<endl;
+		}
+		cout<<endl;
+
+		return true;
+	}
+
+	if(col==n){
+		return sudokuSolver(mat,row+1,0,n);
+	}
+
+	if(mat[row][col]!=0){
+		return sudokuSolver(mat,row,col+1,n);
+	}
+
+
+	for(int options = 1; options<=9; options++){
+
+		if(canWePlace(mat,row,col,n,options)){
+
+			mat[row][col] = options;
+
+			bool rest_of_the_sudoku = sudokuSolver(mat,row,col+1,n);
+			if(rest_of_the_sudoku){
+				return true;
+			}
+
+		}
+
+	}
+
+	mat[row][col] = 0;
+	return false;
+}
+
 
 int main(){
 
@@ -202,6 +267,20 @@ int main(){
 	// int sol[4][4] = {0};
 
 	// cout<<ratInMaze(maze,sol,0,0,3,3)<<endl;
+
+	int mat[9][9] = {
+            {5,3,0,0,7,0,0,0,0},
+            {6,0,0,1,9,5,0,0,0},
+            {0,9,8,0,0,0,0,6,0},
+            {8,0,0,0,6,0,0,0,3},
+            {4,0,0,8,0,3,0,0,1},
+            {7,0,0,0,2,0,0,0,6},
+            {0,6,0,0,0,0,2,8,0},
+            {0,0,0,4,1,9,0,0,5},
+            {0,0,0,0,8,0,0,7,9}
+    };
+
+    cout<<sudokuSolver(mat,0,0,9)<<endl;
 
 	return 0;
 }
