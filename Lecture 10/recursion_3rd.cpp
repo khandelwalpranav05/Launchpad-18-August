@@ -105,6 +105,24 @@ int countMazePath(int sr,int sc,int er,int ec){
 	return count;
 }
 
+void printBoardPath(int end,int start,string path){
+	if(start==end){
+		cout<<path<<endl;
+		return;
+	}
+
+	if(start>end){
+		return;
+	}
+
+	for(int i=1;i<=6;i++){
+		char x = i + '0';
+		printBoardPath(end,start+i,path + "->" +x);
+	}
+
+	return;
+}
+
 int main(){
 
 	// mappedString("2314","");
@@ -113,7 +131,9 @@ int main(){
 	// printPermutations("abc","");
 
 	// cout<<countBoardPath(4,0)<<endl;
+	printBoardPath(4,0,"");
 
-	cout<<countMazePath(0,0,4,4)<<endl;
+	// cout<<countMazePath(0,0,4,4)<<endl;
+
 	return 0;
 }

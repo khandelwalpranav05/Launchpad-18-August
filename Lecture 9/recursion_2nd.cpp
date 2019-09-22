@@ -187,9 +187,9 @@ int main(){
 
 	// printSubsequence("abc","");
 
-	int arr[] = {1,3,5,7};
-	int brr[] = {2,4,6,8,10,12,23,56,89};
-	merge(arr,brr,4,9);
+	// int arr[] = {1,3,5,7};
+	// int brr[] = {2,4,6,8,10,12,23,56,89};
+	// merge(arr,brr,4,9);
 
 
 	// string str = "p";
