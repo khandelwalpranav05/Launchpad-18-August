@@ -123,6 +123,22 @@ void printBoardPath(int end,int start,string path){
 	return;
 }
 
+void printMazePath(int sr,int sc,int er,int ec,string path){
+	if(sr==er and sc==ec){
+		cout<<path<<endl;
+		return;
+	}
+
+	if(sr>er or sc>ec){
+		return;
+	}
+
+	printMazePath(sr+1,sc,er,ec,path + "-> V");
+	printMazePath(sr,sc+1,er,ec,path + "-> H");
+
+	return;
+}
+
 int main(){
 
 	// mappedString("2314","");
@@ -131,9 +147,10 @@ int main(){
 	// printPermutations("abc","");
 
 	// cout<<countBoardPath(4,0)<<endl;
-	printBoardPath(4,0,"");
+	// printBoardPath(4,0,"0");
 
 	// cout<<countMazePath(0,0,4,4)<<endl;
+	printMazePath(0,0,2,2,"");
 
 	return 0;
 }
