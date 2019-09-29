@@ -116,7 +116,10 @@ string moveToEnd(string str){
 	}
 }
 
+// int check = 0;
+
 void printSubsequence(string str,string ans){
+	// check++;
 	if(str.length()==0){
 		// cout<<"Count"<<endl;
 		cout<<ans<<endl;
@@ -127,6 +130,7 @@ void printSubsequence(string str,string ans){
 
 	printSubsequence(ros,ans+ch);
 	printSubsequence(ros,ans);
+
 }
 
 void merge(int arr[],int brr[],int size1,int size2){
@@ -185,7 +189,8 @@ int main(){
 
 	// cout<<moveToEnd("nxaxmxaxnx")<<endl;
 
-	// printSubsequence("abc","");
+	printSubsequence("abc","");
+	// cout<<check<<endl;
 
 	// int arr[] = {1,3,5,7};
 	// int brr[] = {2,4,6,8,10,12,23,56,89};
