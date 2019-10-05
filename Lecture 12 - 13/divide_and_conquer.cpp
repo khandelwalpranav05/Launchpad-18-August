@@ -241,6 +241,80 @@ int painterProblem(int arr[],int n,int k,int time=1){
 
 }
 
+int isPossible(int arr[],int n,int k,int mid){
+
+	int cow = 1;
+	int alloted = arr[0];
+
+	for(int i=1;i<n;i++){
+
+		if((arr[i] - alloted) > mid){
+			cow++;
+			alloted = arr[i];
+
+			if(cow==k){
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+int aggressiveCows(int arr[],int n,int k){
+
+	int minDist = arr[0];
+	int maxDist = arr[n-1] - arr[0];
+
+	int ans = maxDist;
+
+	while(minDist <= maxDist){
+
+		int mid = minDist + (maxDist-minDist)/2;
+
+		if(isPossible(arr,n,k,mid)){
+
+		}else{
+
+		}
+
+	}
+
+	return ans;
+}
+
+void quickSort(int arr[],int low,int high){
+	if(low>=high){
+		return;
+	}
+
+	int left = low;
+	int right = high;
+
+	int pivot = (low+high)/2;
+
+	while(left<=right){
+
+		while(arr[left]< pivot){
+			left++;
+		}
+
+		while(arr[right] > pivot){
+			right--;
+		}
+
+		if(left<=right){
+			swap(arr[left],arr[right]);
+			left++;
+			right--;
+		}
+	}
+
+	quickSort(arr,low,right);
+	quickSort(arr,left,high);
+
+}
+
 int main(){
 
 	// int arr[] = {5,4,3,2,1,6};
@@ -269,9 +343,17 @@ int main(){
 	// int arr[] = {1,3,3,5,5,7,7};
 	// cout<<uniqueNumber(arr,0,6)<<endl;
 
-	int arr[] = {10,20,30,40};
-	int k = 2;
-	cout<<painterProblem(arr,4,2)<<endl;
+	// int arr[] = {10,20,30,40};
+	// int k = 2;
+	// cout<<painterProblem(arr,4,2)<<endl;
+
+	int arr[] = {7,6,5,4,3,2,1};
+	quickSort(arr,0,6);
+
+	for(int i=0;i<7;i++){
+		cout<<arr[i]<<" ";
+	}
+	cout<<endl;
 
 	// int x = 2147483647;
 	// cout<<x<<endl;
