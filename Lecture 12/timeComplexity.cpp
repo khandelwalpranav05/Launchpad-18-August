@@ -142,4 +142,5 @@ int main(int argc, char const *argv[])
 // 	for(int j=0;j<n;j+=k){
 // 		//Code
 // 	}
+
 // }
