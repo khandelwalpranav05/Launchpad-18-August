@@ -291,7 +291,8 @@ void quickSort(int arr[],int low,int high){
 	int left = low;
 	int right = high;
 
-	int pivot = (low+high)/2;
+	int mid = (low+high)/2;
+	int pivot = arr[mid];
 
 	while(left<=right){
 
