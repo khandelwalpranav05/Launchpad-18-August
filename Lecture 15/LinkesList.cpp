@@ -86,7 +86,6 @@ void insertAtIndex(node*&head,int data,int idx){
 	}
 
 	node* temp = head;
-
 	int counter = 0;
 
 	while(counter<idx-1){
