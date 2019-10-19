@@ -120,8 +120,8 @@ int main(){
 	// cout<<balancedParathesis("(()))")<<endl;
 	// cout<<isDuplicate("((a+b)+((c+d)))")<<endl;
 
-	int arr[] = {2,1,2,3,1};
-	cout<<histogram(arr,5)<<endl;
+	// int arr[] = {2,1,2,3,1};
+	// cout<<histogram(arr,5)<<endl;
 
 	return 0;
 }
