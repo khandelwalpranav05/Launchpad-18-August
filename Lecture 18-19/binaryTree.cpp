@@ -326,14 +326,69 @@ node* lca(node*root,int data1,int data2){
 	}
 
 	return leftLCA!=NULL ? leftLCA:rightLCA;
-
 }
+
+int findLevel(node*root,int k,int level){
+	if(root==NULL){
+		return -1;
+	}
+
+	if(root->data==k){
+		return level;
+	}
+
+	int leftDistance = findLevel(root->left,k,level+1);
+
+	if(leftDistance==-1){
+		int rightDistance = findLevel(root->right,k,level+1);
+		return rightDistance;
+	}
+
+	return leftDistance;
+}
+
+int findDistace(node*root,int a,int b){
+
+	node* common = lca(root,a,b);
+
+	int d1 = findLevel(common,a,0);
+	int d2 = findLevel(common,b,0);
+
+	return d1 + d2;
+}
+
+int preorderIteration = 0;
+
+node* buildTreeFromPreorderInorder(int pre[],int in[],int s,int e){
+	if(s>e){
+		return NULL;
+	}
+
+	node* root = new node(pre[preorderIteration]);
+
+	int mid = -1;
+
+	for(int i= s; i<= e;i++){
+		if(in[i]==pre[preorderIteration]){
+			mid = i;
+			break;
+		}
+	}
+
+	preorderIteration++;
+
+	root->left = buildTreeFromPreorderInorder(pre,in,s,mid-1);
+	root->right = buildTreeFromPreorderInorder(pre,in,mid+1,e);
+
+	return root;
+}
+
 
 int main(){
 
-	node* root = NULL;
+	// node* root = NULL;
 
-	root = buildTree(root);
+	// root = buildTree(root);
 	// preorder(root);
 	// cout<<endl;
 	// postorder(root);
@@ -363,6 +418,14 @@ int main(){
 
 	// node* common = lca(root,2,3);
 	// cout<<common->data<<endl;
+
+	// cout<<findDistace(root,2,7)<<endl;
+
+	// int pre[] = {4,2,1,3,6,5,7};
+	// int in[] = {1,2,3,4,5,6,7};
+	// node* root = buildTreeFromPreorderInorder(pre,in,0,6);
+	// preorder(root);
+	// cout<<endl;
 
 	return 0;
 }
