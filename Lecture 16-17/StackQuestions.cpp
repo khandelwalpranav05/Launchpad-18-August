@@ -90,7 +90,6 @@ int histogram(int arr[],int n){
 			}
 
 		}
-
 	}
 
 	while(!s.empty()){

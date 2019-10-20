@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <climits>
+#include <queue>
 
 using namespace std;
 
@@ -232,6 +233,102 @@ int replaceWithChildrenSum(node*root){
 	return temp + root->data;
 }
 
+void levelOrder(node*root){
+
+	queue<node*> q;
+
+	q.push(root);
+
+	while(!q.empty()){
+
+		node* temp = q.front();
+		q.pop();
+
+		cout<<temp->data<<" ";
+
+		if(temp->left!=NULL){
+			q.push(temp->left);
+		}
+
+		if(temp->right!=NULL){
+			q.push(temp->right);
+		}
+
+	}
+
+	cout<<endl;
+}
+
+class HeightBalancedPair{
+public:
+	int height;
+	bool balance;
+};
+
+HeightBalancedPair isBalancedOptimized(node*root){
+	HeightBalancedPair val;
+
+	if(root==NULL){
+		val.balance = true;
+		val.height = -1;
+		return val;
+	}
+
+	HeightBalancedPair leftPair = isBalancedOptimized(root->left);
+	HeightBalancedPair rightPair = isBalancedOptimized(root->right);
+
+	if(!leftPair.balance or !rightPair.balance){
+		val.balance = false;
+	}
+
+	int diff = abs(leftPair.height - rightPair.height);
+
+	val.height = max(leftPair.height,rightPair.height) + 1;
+
+	if(diff>1){
+		val.balance = false;
+	}else{
+		val.balance = true;
+	}
+
+	return val;
+}
+
+void serialize(node* root){
+	if(root==NULL){
+		cout<<(-1)<<" ";
+		return;
+	}
+
+	cout<<root->data<<" ";
+	serialize(root->left);
+	serialize(root->right);
+}
+
+node* lca(node*root,int data1,int data2){
+	if(root==NULL){
+		return NULL;
+	}
+
+	if(root->data==data1 or root->data==data2){
+		return root;
+	}
+
+	node* leftLCA = lca(root->left,data1,data2);
+	node* rightLCA = lca(root->right,data1,data2);
+
+	if(leftLCA==NULL and rightLCA==NULL){
+		return NULL;
+	}
+
+	if(leftLCA!=NULL and rightLCA!=NULL){
+		return root;
+	}
+
+	return leftLCA!=NULL ? leftLCA:rightLCA;
+
+}
+
 int main(){
 
 	node* root = NULL;
@@ -255,6 +352,17 @@ int main(){
 	// cout<<diameter(root)<<endl;
 
 	// cout<<isBalanced(root)<<endl;
+
+	// levelOrder(root);
+
+	// HeightBalancedPair x = isBalancedOptimized(root);
+	// cout<<x.balance<<endl;
+
+	// serialize(root);
+	// cout<<endl;
+
+	// node* common = lca(root,2,3);
+	// cout<<common->data<<endl;
 
 	return 0;
 }
