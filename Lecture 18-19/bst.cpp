@@ -49,6 +49,25 @@ node* construct(){
 	return root;
 }
 
+node* buildTree(node* root){
+	int data;
+	cin>>data;
+
+	if(data ==-1){
+		return NULL;
+	}
+
+	if(root==NULL){
+		node* n = new node(data);
+		root=n;
+	}
+
+	root->left = buildTree(root->left);
+	root->right = buildTree(root->right);
+
+	return root;
+}
+
 void preorder(node*root){
 	if(root==NULL){
 		return;
@@ -285,9 +304,91 @@ LinkedListPair treeToLinkedList(node*root){
 	}
 }
 
+// class TreeDetail{
+// public:
+// 	int size;
+// 	bool bst;
+// 	int min;
+// 	int max;
+
+// 	TreeDetail(){
+// 		size = 0;
+// 		bst = true;
+// 		min = INT_MAX;
+// 		max = INT_MIN;
+// 	}
+// };
+
+// TreeDetail largestBSTinBinaryTree(node*root){
+// 	TreeDetail val;
+// 	cout<<root->data<<" ";
+// 	if(root==NULL){
+// 		return val;
+// 	}
+
+// 	TreeDetail leftDetail = largestBSTinBinaryTree(root->left);
+// 	TreeDetail rightDetail = largestBSTinBinaryTree(root->right);
+
+// 	if(leftDetail.bst==false or rightDetail.bst==false or root->data < leftDetail.max or root->data > rightDetail.min){
+// 		val.bst = false;
+// 		val.size = max(leftDetail.size,rightDetail.size);
+// 		return val;
+// 	}
+
+// 	val.bst = true;
+
+// 	val.size = leftDetail.size + rightDetail.size + 1;
+
+// 	val.min = root->left!=NULL ? leftDetail.min : root->data;
+
+// 	val.max = root->right!=NULL ? rightDetail.max : root->data;
+// 	return val;
+// }
+
+class TreeDetail{
+public:
+	int size;
+	bool bst;
+	int min;
+	int max;
+
+	TreeDetail(){
+		size = 0;
+		bst = true;
+		min = INT_MAX;
+		max = INT_MIN;
+	}
+};
+
+TreeDetail largestBSTinBinaryTree(node*root){
+	TreeDetail val;
+
+	if(root==NULL){
+		return val;
+	}
+
+	TreeDetail leftDetail = largestBSTinBinaryTree(root->left);
+	TreeDetail rightDetail = largestBSTinBinaryTree(root->right);
+
+	if(leftDetail.bst == false or rightDetail.bst==false or root->data < leftDetail.max or root->data > rightDetail.min){
+		val.bst = false;
+		val.size = max(leftDetail.size,rightDetail.size);
+		return val;
+	}
+
+	val.bst = true;
+	val.size = leftDetail.size + rightDetail.size + 1;
+
+	val.min = root->left!=NULL ? leftDetail.min : root->data;
+
+	val.max = root->right!=NULL ? rightDetail.max : root->data;
+
+	return val;
+}
+
 int main(){
 
-	node* root = construct();
+	// node* root = construct();
 	// preorder(root);
 	// cout<<endl;
 
@@ -314,15 +415,26 @@ int main(){
 	// printLeaf(root);
 	// cout<<endl;
 
-	LinkedListPair temp = treeToLinkedList(root);
+	// LinkedListPair temp = treeToLinkedList(root);
 
-	node* head = temp.head;
+	// node* head = temp.head;
 
-	while(head!=NULL){
-		cout<<head->data<<" ";
-		head = head->right;
-	}
-	cout<<endl;
+	// while(head!=NULL){
+	// 	cout<<head->data<<" ";
+	// 	head = head->right;
+	// }
+	// cout<<endl;
+
+	node* root = NULL;
+	root = buildTree(root);
+
+	// node* root = construct();
+
+	TreeDetail val = largestBSTinBinaryTree(root);
+
+	cout<<val.size<<endl;
 
 	return 0;
 }
+
+// 8 4 2 1 -1 -1 3 -1 -1 6 5 -1 -1 7 -1 -1 9 7 -1 -1 10 -1 -1
