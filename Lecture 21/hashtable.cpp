@@ -23,7 +23,7 @@ class HashTable{
 	int currSize;
 	node<T>** bucket;
 public:
-	HashTable(int default_size = 7){
+	HashTable(int default_size = 4){
 		maxSize = default_size;
 		currSize = 0;
 		bucket = new node<T>*[maxSize];
@@ -36,28 +36,48 @@ public:
 		int idx = 0;
 
 		for(int i=0;i<len;i++){
-			idx += key[i]*mulFactor;
-			mulFactor = mulFactor*37;
+			idx = (idx%this->maxSize) + ((key[i]%this->maxSize)*(mulFactor%this->maxSize))%this->maxSize;
+			idx = idx%this->maxSize;
+			mulFactor =((mulFactor%this->maxSize)*(37%this->maxSize))%this->maxSize;
 		}
-
-		idx = idx%maxSize;
+		idx = idx%this->maxSize;
 		return idx;
 	}
 
+	void rehash() {
+		int oldSize = this->maxSize;
+		node<T>** temp = bucket;
+		bucket = new node<T>*[2*this->maxSize];
+		this->maxSize = 2*this->maxSize;
+		for(int i = 0; i < this->maxSize; i++) {
+			bucket[i] = NULL;
+		}
+		for(int i = 0; i < oldSize; i++) {
+			node<T>* curr_bucket = temp[i];
+			while(curr_bucket!=NULL) {
+				insert(curr_bucket->key, curr_bucket->value);
+				curr_bucket = curr_bucket->next;
+			}
+		}
+	}
+
 	void insert(string key,T val){
+		double lambda = (double)this->currSize / this->maxSize;
+		if (lambda > 0.5) {
+			rehash();
+		}
 		int idx = hashFunction(key);
-
 		node<T>* n = new node<T>(key,val);
-
 		n->next = bucket[idx];
 		bucket[idx] = n;
 		currSize++;
+		
 	}
 
 	void display(){
 		for(int i=0;i<maxSize;i++){
 
-			node<T>* head = bucket[i];
+			node<T>* head = this->bucket[i];
 
 			while(head!=NULL){
 				cout<<head->key<<" "<<head->value<<", ";
@@ -91,7 +111,7 @@ public:
 
 		node<T>* temp = bucket[idx];
 
-		cout<<(*temp)<<endl;
+		// cout<<(*temp)<<endl;
 
 		if(temp==NULL){
 			return;
@@ -143,14 +163,25 @@ int main(){
 	h.insert("Norwaskfhew",2);
 	h.insert("Pakistan",112);
 	h.insert("New Country",0);
+	h.insert("a1", 0);
+	h.insert("a2", 0);
+	h.insert("a3", 0);
+	h.insert("a4", 0);
+	h.insert("a5", 0);
+	h.insert("a6", 0);
+	h.insert("a7", 0);
+	h.insert("a8", 0);
+	h.insert("a9", 0);
+	h.insert("a10", 0);
+	h.insert("a11", 0);
 
-	h.display();
+	// h.display();
 
-	int* temp = h.search("India");
-	cout<<(*temp)<<endl;
+	// int* temp = h.search("India");
+	// cout<<(*temp)<<endl;
 
-	// h.erase("Norwaskfhew");
-	h.erase("dkjbfv");
+	// // h.erase("Norwaskfhew");
+	// h.erase("dkjbfv");
 
 	h.display();
 
