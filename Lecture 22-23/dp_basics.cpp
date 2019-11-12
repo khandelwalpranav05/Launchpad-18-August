@@ -1,5 +1,6 @@
 #include <iostream>
 #include <climits>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -302,49 +303,49 @@ using namespace std;
 // 	return result;
 // }
 
-int dp[10][10];
+// int dp[10][10];
 
-int longestCommonSubsequenceMemo(char s1[],int i,char s2[],int j){
-	if(s1[i]=='\0' or s2[j]=='\0'){
-		dp[i][j] = 0;
-		return 0;
-	}
+// int longestCommonSubsequenceMemo(char s1[],int i,char s2[],int j){
+// 	if(s1[i]=='\0' or s2[j]=='\0'){
+// 		dp[i][j] = 0;
+// 		return 0;
+// 	}
 
-	if(dp[i][j]!=-1){
-		return dp[i][j];
-	}
+// 	if(dp[i][j]!=-1){
+// 		return dp[i][j];
+// 	}
 
-	char ch1 = s1[i];
-	char ch2 = s2[j];
+// 	char ch1 = s1[i];
+// 	char ch2 = s2[j];
 
-	int result = 0;
+// 	int result = 0;
 
-	if(ch1==ch2){
-		result = 1 + longestCommonSubsequenceMemo(s1,i+1,s2,j+1);
-	}else{
+// 	if(ch1==ch2){
+// 		result = 1 + longestCommonSubsequenceMemo(s1,i+1,s2,j+1);
+// 	}else{
 
-		int check1 = longestCommonSubsequenceMemo(s1,i+1,s2,j);
-		int check2 = longestCommonSubsequenceMemo(s1,i,s2,j+1);
+// 		int check1 = longestCommonSubsequenceMemo(s1,i+1,s2,j);
+// 		int check2 = longestCommonSubsequenceMemo(s1,i,s2,j+1);
 
-		result = max(check2,check1);
-	}
+// 		result = max(check2,check1);
+// 	}
 
-	dp[i][j] = result;
+// 	dp[i][j] = result;
 
-	for(int i=0;i<=5;i++){
-		for(int j=0;j<=5;j++){
-			if(dp[i][j]==-1){
-				cout<<"* ";
-			}else{
-				cout<<dp[i][j]<<" ";
-			}
-		}
-		cout<<endl;
-	}
-	cout<<"*************************"<<endl;
+// 	for(int i=0;i<=5;i++){
+// 		for(int j=0;j<=5;j++){
+// 			if(dp[i][j]==-1){
+// 				cout<<"* ";
+// 			}else{
+// 				cout<<dp[i][j]<<" ";
+// 			}
+// 		}
+// 		cout<<endl;
+// 	}
+// 	cout<<"*************************"<<endl;
 
-	return result;
-}
+// 	return result;
+// }
 
 int longestCommonSubsequence_DP(char s1[],char s2[]){
 
@@ -374,15 +375,24 @@ int longestCommonSubsequence_DP(char s1[],char s2[]){
 
 }
 
+int dp[10][10];
+
 int editDistance(char s1[],int i,char s2[],int j){
 	if(s1[i]=='\0'){
+		dp[i][j] = sizeof(s2) - sizeof(s1);
+		cout<<dp[i][j]<<"BASE"<<endl;
 		return sizeof(s2) - sizeof(s1);
 	}
 
 	if(s2[j]=='\0'){
+		dp[i][j] = sizeof(s1) - sizeof(s2);
+		cout<<dp[i][j]<<"BASE"<<endl;
 		return sizeof(s1) - sizeof(s2);
 	}
 
+	if(dp[i][j]!=-1){
+		return dp[i][j];
+	}
 
 	char ch1 = s1[i];
 	char ch2 = s2[j];
@@ -402,7 +412,146 @@ int editDistance(char s1[],int i,char s2[],int j){
 		result = min(del,min(insertion,replace));
 	}
 
+	dp[i][j] = result;
+
+		// for(int i=0;i<=sizeof(s1);i++){
+		// 	for(int j=0;j<=sizeof(s2);j++){
+		// 		if(dp[i][j]==-1){
+		// 			cout<<"* ";
+		// 		}else{
+		// 			cout<<dp[i][j]<<" ";
+		// 		}
+		// 	}
+		// 	cout<<endl;
+		// }
+		// cout<<"*************************"<<endl;
+
 	return result;
+}
+
+int editDistance_DP(char s1[],char s2[]){
+
+	int editDP[strlen(s1) + 1][strlen(s2) + 1];
+
+	// cout<<strlen(s1)<<endl;
+	// cout<<strlen(s2)<<endl;
+
+	int check = 0;
+	for(int j=strlen(s2);j>=0;j--){
+		editDP[strlen(s1)][j] = check;
+		check++; 
+	}
+
+	check = 0;
+	for(int i=strlen(s1);i>=0;i--){
+		editDP[i][strlen(s2)] = check;
+		check++;
+	}
+
+	for(int i = strlen(s1);i>= 0;i--){
+
+		for(int j = strlen(s2);j>= 0;j--){
+			if(i==strlen(s1) or j==strlen(s2)){
+				// editDP[i][j] =abs(abs(i-j) - abs(strlen(s1) - strlen(s2)));
+				continue;
+			}
+
+			if(s1[i]==s2[j]){
+				editDP[i][j] = editDP[i+1][j+1];
+			}else{
+				editDP[i][j] = 1 + min(editDP[i+1][j],min(editDP[i][j+1],editDP[i+1][j+1]));
+			}
+		}
+	}
+
+	// for(int i=0;i<9;i++){
+	// 	for(int j=0;j<7;j++){
+	// 		cout<<editDP[i][j]<<" ";
+	// 	}
+	// 	cout<<endl;
+	// }
+
+	return editDP[0][0];
+}
+
+int knapDP[5][9];
+
+int knapSack(int value[],int weight[],int si,int capacity,int n){
+	if(si==n){
+		knapDP[si][capacity] = 0;
+		return 0;
+	}
+
+	if(knapDP[si][capacity]!=-1){
+		return knapDP[si][capacity];
+	}
+
+	int valueInclude = INT_MIN;
+	int valueExclude = INT_MIN;
+
+	if(weight[si]<=capacity){
+		valueInclude = value[si] + knapSack(value,weight,si+1,capacity - weight[si],n);
+	}
+
+	valueExclude =knapSack(value,weight,si+1,capacity,n);
+
+	int result = max(valueInclude,valueExclude);
+
+	knapDP[si][capacity] = result;
+
+	for(int i=0;i<5;i++){
+		for(int j=0;j<9;j++){
+			if(knapDP[i][j]==-1){
+				cout<<"-1 ";
+			}
+			else if(knapDP[i][j]==0){
+				cout<<"00 ";
+			}else{
+				cout<<knapDP[i][j]<<" ";
+			}
+		}
+		cout<<endl;
+	}
+	cout<<"**************"<<endl;
+
+	return result;
+}
+
+int knapSack_DP(int value[],int weight[],int capacity,int n){
+
+	int storageKnapSack[n+1][capacity+1];
+
+	for(int i=0;i<=n;i++){
+		storageKnapSack[i][0] = 0; 
+	}
+
+	for(int j=0;j<=capacity;j++){
+		storageKnapSack[0][j] = 0;
+	}
+
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=capacity;j++){
+
+			// if(i==0 or j==0){
+			// 	storageKnapSack[i][j] = 0;
+			// 	continue;
+			// }
+
+			if(weight[i]>j){
+				storageKnapSack[i][j] = storageKnapSack[i-1][j];
+			}else{
+				storageKnapSack[i][j] = max(storageKnapSack[i-1][j],value[i] + storageKnapSack[i-1][j - weight[i]]);
+			}
+
+			cout<<storageKnapSack[i][j]<<" ";
+		}
+		cout<<endl;
+	}
+	cout<<endl;
+
+
+	return storageKnapSack[n][capacity];
+
 }
 
 int main(){
@@ -452,10 +601,35 @@ int main(){
 
 	// cout<<longestCommonSubsequence_DP(s1,s2)<<endl;
 
-	char s1[] = "saturday";
-	char s2[] = "sunday";
+	// char s1[] = "cassngt";
+	// char s2[] = "";
 
-	cout<<editDistance(s1,0,s2,0)<<endl;
+	// // cout<<sizeof(s1)<<endl;
+	// // cout<<sizeof(s2)<<endl;
+
+	// for(int i=0;i<=sizeof(s1);i++){
+	// 	for(int j=0;j<=sizeof(s2);j++){
+	// 		dp[i][j] = -1;
+	// 	}
+	// }
+
+	// cout<<editDistance(s1,0,s2,0)<<endl;
+
+	// cout<<editDistance_DP(s1,s2)<<endl;
+
+	int value[] = {50,40,70,40};
+	int weight[] = {5,4,6,3};
+	int capacity = 8;
+
+	// for(int i=0;i<5;i++){
+	// 	for(int j=0;j<9;j++){
+	// 		knapDP[i][j] = -1; 
+	// 	}
+	// }
+
+	// cout<<knapSack(value,weight,0,capacity,4)<<endl;
+
+	cout<<knapSack_DP(value,weight,capacity,4)<<endl;
 
 	return 0;
 }
