@@ -34,6 +34,12 @@ public:
 
 int main(){
 
+	int arr[3][10] = {
+		{1,5,7,10},
+		{2,4,8},
+		{3,6,9,11},
+	};
+
 	// priority_queue<int> pq;
 
 	// priority_queue<int,vector<int>,greater<int> > pq;
@@ -51,21 +57,21 @@ int main(){
 	// 	pq.pop();
 	// }
 
-	priority_queue<Coordinates,vector<Coordinates>,CoordinatesCompare> crPQ;
+	// priority_queue<Coordinates,vector<Coordinates>,CoordinatesCompare> crPQ;
 
-	int x[] = {1,2,1,5,6,4};
-	int y[] = {1,1,0,2,1,2};
+	// int x[] = {1,2,1,5,6,4};
+	// int y[] = {1,1,0,2,1,2};
 
-	for(int i=0;i<6;i++){
-		Coordinates a(i,x[i],y[i]);
-		crPQ.push(a);
-	}
+	// for(int i=0;i<6;i++){
+	// 	Coordinates a(i,x[i],y[i]);
+	// 	crPQ.push(a);
+	// }
 
-	while(!crPQ.empty()){
-		Coordinates a = crPQ.top();
-		a.display();
-		crPQ.pop();
-	}
+	// while(!crPQ.empty()){
+	// 	Coordinates a = crPQ.top();
+	// 	a.display();
+	// 	crPQ.pop();
+	// }
 
 	// CoordinatesCompare cc;
 	// cc();
