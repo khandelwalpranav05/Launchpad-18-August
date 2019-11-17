@@ -35,14 +35,14 @@ public:
 
 int main(){
 
-	// Graph g;
+	Graph g;
 
-	// g.addEdge(1,2);
-	// g.addEdge(1,3);
-	// g.addEdge(3,2);
-	// g.addEdge(3,2);
+	g.addEdge(1,2);
+	g.addEdge(1,3);
+	g.addEdge(3,2);
+	g.addEdge(3,2);
 
-	// g.display();
+	g.display();
 
 	// Graph<string> g;
 
