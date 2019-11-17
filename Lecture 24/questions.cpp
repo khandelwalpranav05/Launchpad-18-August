@@ -4,24 +4,27 @@
 
 using namespace std;
 
-int minCost(int arr[],int n){
-	priority_queue<int,vector<int>,greater<int> > pq;
+long minCost(){
+	int arr[] = {3, 7, 9, 4};
 
-	for(int i=0;i<n;i++){
+	priority_queue<int,vector<int>,greater<int> > pq;
+	// priority_queue<int> pq;
+
+	for(int i=0;i<4;i++){
 		pq.push(arr[i]);
 	}
 
-	int sum = 0;
-
-	int first = pq.top();
-	pq.pop();
-
-	while(!pq.empty()){
-		first+=pq.top();
-		sum+=first;
-
-		pq.pop();
-	}
+	long sum = 0; 
+  
+    while (pq.size() > 1) { 
+        int first = pq.top(); 
+        pq.pop(); 
+        int second = pq.top(); 
+        pq.pop(); 
+  
+        sum += first + second; 
+        pq.push(first + second); 
+    }
 
 	return sum;
 }
