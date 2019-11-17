@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <list>
+#include <queue>
 
 using namespace std;
 
@@ -31,18 +32,69 @@ public:
 		}
 	}
 
+	void bfs(T src){
+		queue<T> q;
+		unordered_map<T,bool> visited;
+
+		q.push(src);
+		visited[src] = true;
+
+		while(!q.empty()){
+
+			T node = q.front();
+			q.pop();
+
+			cout<<node<<" ";
+
+			for(T neighbor:AdjList[node]){
+				if(!visited[neighbor]){
+					q.push(neighbor);
+					visited[neighbor] = true;
+				}
+			}
+
+		}
+
+		cout<<endl;
+	}
+
+	void dfs_Helper(T node,unordered_map<T,bool> &visited){
+
+		cout<<node<<" ";
+		visited[node] = true;
+
+		for(T neighbor:AdjList[node]){
+			if(!visited[neighbor]){
+				dfs_Helper(neighbor,visited);
+			}
+		}
+
+	}
+
+	void dfs(T src){
+
+		unordered_map<T,bool> visited;
+		// visited[src] = true;
+
+		dfs_Helper(src,visited);
+		cout<<endl;
+	}
+
 };
 
 int main(){
 
-	Graph g;
+	Graph<int> g;
 
 	g.addEdge(1,2);
 	g.addEdge(1,3);
 	g.addEdge(3,2);
-	g.addEdge(3,2);
+	// g.addEdge(3,2);
 
 	g.display();
+
+	g.bfs(1);
+	g.dfs(1);
 
 	// Graph<string> g;
 
