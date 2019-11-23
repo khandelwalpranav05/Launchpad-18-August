@@ -76,25 +76,72 @@ public:
 		unordered_map<T,bool> visited;
 		// visited[src] = true;
 
-		dfs_Helper(src,visited);
+		int component = 0;
+
+		for(auto node:AdjList){
+			if(!visited[node.first]){
+				dfs_Helper(node.first,visited);
+				cout<<endl;
+				component++;
+			}
+		}
+		
+		cout<<"Number of component "<<component<<endl;
+	}
+
+	void dfsTopologicalSortHelper(T node,unordered_map<T,bool> &visited,list<T> &order){
+
+		visited[node] = true;
+
+		for(T neighbor:AdjList[node]){
+			if(!visited[neighbor]){
+				dfsTopologicalSortHelper(neighbor,visited,order);
+			}
+		}
+
+		order.push_front(node);
+	}
+
+	void dfsTopologicalSort(T src){
+		unordered_map<T,bool> visited;
+		list<T> order;
+
+		dfsTopologicalSortHelper(src,visited,order);
+
+		for(auto node:AdjList){
+			if(!visited[node.first]){
+				dfsTopologicalSortHelper(node.first,visited,order);
+			}
+		}
+
+		for(T node:order){
+			cout<<node<<" ";
+		}
 		cout<<endl;
 	}
+
+	
 
 };
 
 int main(){
 
-	Graph<int> g;
+	// Graph<int> g;
 
-	g.addEdge(1,2);
-	g.addEdge(1,3);
-	g.addEdge(3,2);
+	// g.addEdge(1,2);
+	// g.addEdge(1,3);
 	// g.addEdge(3,2);
+	// // g.addEdge(3,2);
 
-	g.display();
+	// g.addEdge(4,5);
+	// g.addEdge(6,5);
+	// g.addEdge(7,5);
 
-	g.bfs(1);
-	g.dfs(1);
+
+	// g.display();
+
+	// // g.bfs(1);
+	// g.dfs(1);
 
 	// Graph<string> g;
 
@@ -105,5 +152,15 @@ int main(){
 
 	// g.display();
 
+	Graph<string> g;
+
+	g.addEdge("Maths","Programming",false);
+	g.addEdge("English","Programming",false);
+	g.addEdge("Programming","Python",false);
+	g.addEdge("Programming","Java",false);
+	g.addEdge("Java","Web",false);
+	g.addEdge("Python","Web",false);
+
+	g.dfsTopologicalSort("Maths");
 	return 0;
 }
